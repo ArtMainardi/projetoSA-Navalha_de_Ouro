@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navalha de Ouro - Agendamentos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
+    <!-- Cabeçalho / Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-crown logo-icon"></i>
+            <i class="fa-solid fa-scissors logo-icon"></i>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('agendamentos') }}" class="active">Agendamentos</a>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+
+        <div class="page-header">
+            <h1><i class="fa-regular fa-calendar-check"></i> Lista de Agendamentos</h1>
+            <p>Gerencie todos os atendimentos marcados na barbearia</p>
+        </div>
+
+        <!-- Links de Filtro por Status no topo -->
+        <div class="filter-bar">
+            <span>Filtrar por status:</span>
+            <div class="filter-links">
+                <a href="{{ url_for('agendamentos') }}" class="btn-filter">Todos</a>
+                <a href="{{ url_for('status_listar', status='Agendado') }}" class="btn-filter status-agendado-link">Agendados</a>
+                <a href="{{ url_for('status_listar', status='Concluído') }}" class="btn-filter status-concluido-link">Concluídos</a>
+                <a href="{{ url_for('status_listar', status='Cancelado') }}" class="btn-filter status-cancelado-link">Cancelados</a>
+            </div>
+        </div>
+
+        <!-- Tabela de Agendamentos -->
+        <div class="table-card">
+            {% if agendamentos %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Serviço</th>
+                            <th>Barbeiro</th>
+                            <th>Data</th>
+                            <th>Horário</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in agendamentos %}
+                            <!-- Destaque na linha base do status -->
+                            <tr class="{% if item.status == 'Concluído' %}row-concluido{% elif item.status == 'Cancelado' %}row-cancelado{% else %}row-agendado{% endif %}">
+                                <td>{{ loop.index }}</td>
+                                <td><strong>{{ item.cliente }}</strong></td>
+                                <td>{{ item.servico }}</td>
+                                <td>{{ item.barbeiro }}</td>
+                                <td>{{ item.data }}</td>
+                                <td><i class="fa-regular fa-clock"></i> {{ item.horario }}</td>
+                                <td>
+                                    <!-- Badges estilizadas com IF -->
+                                    {% if item.status == 'Concluído' %}
+                                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> Concluído</span>
+                                    {% elif item.status == 'Cancelado' %}
+                                        <span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> Cancelado</span>
+                                    {% else %}
+                                        <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Agendado</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <!-- Link de Detalhes -->
+                                    <a href="{{ url_for('agendamento_buscar', id=item.id) }}" class="btn-detail" title="Ver Detalhes">
+                                        <i class="fa-solid fa-eye"></i> Detalhes
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <!-- Mensagem caso não haja agendamentos cadastrados ou no filtro selecionado -->
+                <div class="empty-state">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <p>Nenhum agendamento encontrado.</p>
+                </div>
+            {% endif %}
+        </div>
+    </main>
 </body>
 </html>
