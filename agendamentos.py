@@ -54,16 +54,17 @@ def buscar_agendamento(id):
 
 def listar_por_status(status):
     conexao = None
-    agendamentos = None
+    agendamentos = []
     try:
         conexao = banco.conectar()
         cursor = conexao.cursor()
         cursor.execute(f"select * from agendamentos where status = %s", (status,))
-        agendamento_busca = cursor.fetchall()
-        if agendamento_busca:
-            agendamentos = Agendamento.reverte_tupla(agendamento_busca)
+        lista = cursor.fetchall()
+        if len(lista) > 0:
+            for i in lista:
+                agendamentos.append(Agendamento.reverte_tupla(i))
         else:
-            print(f"Agendamentos não encontrados!")
+            print(f"Tabela de agendamentos vazia!")
 
         conexao.commit()
         return agendamentos
