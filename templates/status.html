@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navalha de Ouro - Agendamentos por Status</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Cabeçalho / Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-crown logo-icon"></i>
+            <i class="fa-solid fa-scissors logo-icon"></i>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('agendamentos') }}" class="active">Agendamentos</a>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+
+        <div class="page-header">
+            <h1><i class="fa-solid fa-filter"></i> Agendamentos Filtrados</h1>
+            <p>Visualizando listagem específica por status</p>
+        </div>
+
+        <!-- Links de Filtro por Status no topo -->
+        <div class="filter-bar">
+            <span>Filtrar por status:</span>
+            <div class="filter-links">
+                <a href="{{ url_for('agendamentos') }}" class="btn-filter">Todos</a>
+                <a href="{{ url_for('status_listar', status='Agendado') }}" class="btn-filter">Agendados</a>
+                <a href="{{ url_for('status_listar', status='Concluído') }}" class="btn-filter">Concluídos</a>
+                <a href="{{ url_for('status_listar', status='Cancelado') }}" class="btn-filter">Cancelados</a>
+            </div>
+        </div>
+
+        <!-- Tabela de Agendamentos Filtrados -->
+        <div class="table-card">
+            <!-- Verifica se a variável agendamentos não é None e contém itens -->
+            {% if agendamentos and agendamentos|length > 0 %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Serviço</th>
+                            <th>Barbeiro</th>
+                            <th>Data</th>
+                            <th>Horário</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in agendamentos %}
+                            <!-- Destaque na linha de acordo com o atributo do objeto Agendamento -->
+                            <tr class="{% if item.status == 'Concluído' %}row-concluido{% elif item.status == 'Cancelado' %}row-cancelado{% else %}row-agendado{% endif %}">
+                                <td>{{ loop.index }}</td>
+                                <td><strong>{{ item.cliente }}</strong></td>
+                                <td>{{ item.servico }}</td>
+                                <td>{{ item.barbeiro }}</td>
+                                <td>{{ item.data }}</td>
+                                <td><i class="fa-regular fa-clock"></i> {{ item.horario }}</td>
+                                <td>
+                                    {% if item.status == 'Concluído' %}
+                                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> Concluído</span>
+                                    {% elif item.status == 'Cancelado' %}
+                                        <span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> Cancelado</span>
+                                    {% else %}
+                                        <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Agendado</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <!-- Passa o id do objeto retornado por reverte_tupla -->
+                                    <a href="{{ url_for('agendamento_buscar', id=item.id) }}" class="btn-detail" title="Ver Detalhes">
+                                        <i class="fa-solid fa-eye"></i> Detalhes
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <!-- Exibido quando a função do backend retorna None ou lista vazia -->
+                <div class="empty-state">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <p>Agendamentos não encontrados para este status!</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div style="margin-top: 20px;">
+            <a href="{{ url_for('agendamentos') }}" class="btn-filter"><i class="fa-solid fa-arrow-left"></i> Voltar para todos os agendamentos</a>
+        </div>
+
+    </main>
+
+</body>
+</html>
