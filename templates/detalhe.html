@@ -1,10 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navalha de Ouro - Detalhes do Agendamento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-crown logo-icon"></i>
+            <i class="fa-solid fa-scissors logo-icon"></i>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('agendamentos') }}" class="active">Agendamentos</a>
+        </nav>
+    </header>
 
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <!-- Tratamento com IF para verificar se o agendamento existe -->
+        {% if agendamento %}
+            <div class="page-header">
+                <h1><i class="fa-solid fa-address-card"></i> Detalhes do Agendamento #{{ agendamento.id }}</h1>
+                <p>Informações completas do atendimento</p>
+            </div>
+
+            <!-- Cartão com as Informações -->
+            <div class="detail-card">
+                <div class="detail-header">
+                    <h2>{{ agendamento.cliente }}</h2>
+                    {% if agendamento.status == 'Concluído' %}
+                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> Concluído</span>
+                    {% elif agendamento.status == 'Cancelado' %}
+                        <span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> Cancelado</span>
+                    {% else %}
+                        <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Agendado</span>
+                    {% endif %}
+                </div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span class="label"><i class="fa-solid fa-phone"></i> Telefone</span>
+                        <span class="value">{{ agendamento.telefone if agendamento.telefone else 'Não informado' }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="label"><i class="fa-solid fa-cut"></i> Serviço</span>
+                        <span class="value">{{ agendamento.servico }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="label"><i class="fa-solid fa-dollar-sign"></i> Preço</span>
+                        <span class="value price">R$ {{ "%.2f"|format(agendamento.preco|float) }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="label"><i class="fa-solid fa-user-ninja"></i> Barbeiro</span>
+                        <span class="value">{{ agendamento.barbeiro }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="label"><i class="fa-regular fa-calendar"></i> Data</span>
+                        <span class="value">{{ agendamento.data }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="label"><i class="fa-regular fa-clock"></i> Horário</span>
+                        <span class="value">{{ agendamento.horario }}</span>
+                    </div>
+                </div>
+
+                <div class="detail-actions">
+                    <a href="{{ url_for('agendamentos') }}" class="btn-filter">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar à Listagem
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <!-- Tratamento caso o agendamento não seja encontrado pelo ID -->
+            <div class="empty-state-card">
+                <i class="fa-solid fa-triangle-exclamation warning-icon"></i>
+                <h2>Agendamento não encontrado!</h2>
+                <p>O código do agendamento procurado não existe no banco de dados.</p>
+                <br>
+                <a href="{{ url_for('agendamentos') }}" class="btn-primary">Voltar para a Listagem</a>
+            </div>
+        {% endif %}
+    </main>
 </body>
 </html>
