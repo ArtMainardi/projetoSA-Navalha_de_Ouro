@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navalha de Ouro - Início</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-crown logo-icon"></i>
+            <i class="fa-solid fa-scissors logo-icon"></i>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('index') }}" class="active">Início</a>
+            <a href="{{ url_for('agendamentos') }}">Agendamentos</a>
+        </nav>
+    </header>
 
+    <main class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="title-card">
+                <span class="sub-title">&lt; BARBEARIA &gt;</span>
+                <h1 class="main-title">NAVALHA DE OURO</h1>
+            </div>
+            <div class="stats-card">
+                <p>Total de Agendamentos Cadastrados:</p>
+                <span class="badge-count">{{ quantidadeAgendamentos }}</span>
+            </div>
+            <a href="{{ url_for('agendamentos') }}" class="btn-primary">Ver Agendamentos</a>
+        </div>
+    </main>
 </body>
 </html>

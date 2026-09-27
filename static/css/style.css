@@ -1,0 +1,158 @@
+/* Resets e Configurações Básicas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #FFFFFF;
+    overflow-x: hidden;
+}
+
+/* Paleta de Cores (baseada no protótipo)
+   Preto: #121212 / #1F1F1F
+   Dourado/Amarelo: #E2A944
+   Azul/Destaque secundário: #4B92E5
+*/
+
+/* Cabeçalho / Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding: 1rem 3rem;
+    background-color: rgba(18, 18, 18, 0.95);
+    border-bottom: 1px solid #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #E2A944;
+    font-size: 1.8rem;
+}
+
+.nav-links a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-right: 1.5rem;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    color: #E2A944;
+    border-bottom: 2px solid #E2A944;
+}
+
+/* Seção Hero (Banner Principal) */
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    /* Imagem de fundo padrão de barbearia */
+    background: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Escurecimento da imagem de fundo */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Cartão do Título (Réplica do layout da imagem) */
+.title-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1.5rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.sub-title {
+    color: #FFFFFF;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.main-title {
+    color: #FFFFFF;
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin-top: 5px;
+}
+
+/* Bloco dos Agendamentos */
+.stats-card {
+    background-color: #1F1F1F;
+    border-left: 4px solid #E2A944;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.stats-card p {
+    font-size: 1.1rem;
+    color: #DDD;
+}
+
+.badge-count {
+    background-color: #E2A944;
+    color: #121212;
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+/* Botão de Ação */
+.btn-primary {
+    background-color: #E2A944;
+    color: #121212;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #d19733;
+    transform: translateY(-2px);
+}
