@@ -47,7 +47,7 @@ export-env {
         }
     }
 
-    let virtual_env = r#'C:\Users\arthur_mainardi\Documents\projetoSA-Navalha_de_Ouro\.venv'#
+    let virtual_env = r#'C:\Users\Pichau\PycharmProjects\projetoSA-Navalha_de_Ouro\.venv'#
     let bin = r#'Scripts'#
     let path_name = if (has-env 'Path') { 'Path' } else { 'PATH' }
     let venv_path = ([$virtual_env $bin] | path join)
