@@ -60,7 +60,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV 'C:\Users\arthur_mainardi\Documents\projetoSA-Navalha_de_Ouro\.venv'
+set -gx VIRTUAL_ENV 'C:\Users\Pichau\PycharmProjects\projetoSA-Navalha_de_Ouro\.venv'
 
 set -gx _OLD_PKG_CONFIG_PATH "$PKG_CONFIG_PATH"
 set -gx PKG_CONFIG_PATH "$VIRTUAL_ENV/lib/pkgconfig:$PKG_CONFIG_PATH"
