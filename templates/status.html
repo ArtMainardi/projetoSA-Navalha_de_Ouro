@@ -68,12 +68,13 @@
                                 <td>{{ item.data }}</td>
                                 <td><i class="fa-regular fa-clock"></i> {{ item.horario }}</td>
                                 <td>
-                                    {% if item.status == 'Concluído' %}
-                                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> Concluído</span>
+                                    <!-- Badges estilizadas com IF -->
+                                    {% if item.status == 'Agendado' %}
+                                        <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Agendado</span>
                                     {% elif item.status == 'Cancelado' %}
                                         <span class="badge badge-danger"><i class="fa-solid fa-xmark"></i> Cancelado</span>
                                     {% else %}
-                                        <span class="badge badge-warning"><i class="fa-solid fa-clock"></i> Agendado</span>
+                                        <span class="badge badge-success"><i class="fa-solid fa-check"></i> Concluído</span>
                                     {% endif %}
                                 </td>
                                 <td>
